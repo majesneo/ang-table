@@ -12,7 +12,7 @@ export class FilterPipe implements PipeTransform {
 
   }
 
-  filterArray(table, selectListId) {
+  filterArray(table: any[], selectListId: { [x: string]: string; }) {
     let result: any = [];
     return table.filter((item: any) => {
       for (const j in selectListId) {
@@ -35,7 +35,7 @@ export class FilterPipe implements PipeTransform {
     });
   }
 
-  // tslint:disable-next-line:typedef
+
   checkEmptyFilters(filters: Array<any>) {
     let empty = true;
     filters.forEach(filter => {

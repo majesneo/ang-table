@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TableService} from './service/table.service';
+import {Table} from './model/table';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -11,12 +13,10 @@ export class AppComponent implements OnInit {
 
   table: object = [];
   primer: any;
-  selectGender: string[];
-  selectCity: string[];
-  selectDepart: string[];
-
-
-  selectListId: Array<Array<any>> | undefined;
+  selectGender: Array<string> = [];
+  selectCity: Array<string> = [];
+  selectDepart: Array<string> = [];
+  selectListId: Array<string>  = [];
 
   constructor(private tableService: TableService) {
 
@@ -37,10 +37,12 @@ export class AppComponent implements OnInit {
   }
 
 
-  uniqueGender(arr: object) {
-    let result = [];
+  uniqueGender(arr: Array<Table>) {
+    console.log(arr);
+    let result: any[] = [];
+
     for (let str of arr) {
-      // @ts-ignore
+
       if (!result.includes(str.gender)) {
         result.push(str.gender);
       }
@@ -49,8 +51,9 @@ export class AppComponent implements OnInit {
     return result;
   }
 
-  uniqueCity(arr: object) {
-    let result = [];
+  uniqueCity(arr: Array<Table>) {
+    let result: any[] = [];
+
     for (let str of arr) {
       if (!result.includes(str.address.city)) {
         result.push(str.address.city);
@@ -60,10 +63,9 @@ export class AppComponent implements OnInit {
     return result;
   }
 
-  uniqueDepart(arr: object) {
-    // @ts-ignore
+  uniqueDepart(arr: Array<Table>) {
     let result: any[] = [];
-    // @ts-ignore
+
     for (const str of arr) {
       if (!result.includes(str.department)) {
         result.push(str.department);
@@ -75,14 +77,19 @@ export class AppComponent implements OnInit {
 
 
   getListId(e: any, filter: string, category: number) {
+
     if (!this.selectListId[category]) {
+
+      // @ts-ignore
       this.selectListId[category] = [];
     }
     if (e.target.checked) {
-      // @ts-ignore
+
       this.selectListId[category] = this.selectListId[category].concat(filter);
     } else {
-      this.selectListId[category] = this.selectListId[category].filter(item => item !== filter);
+
+      // @ts-ignore
+      this.selectListId[category] = this.selectListId[category].filter((item: string) => item !== filter);
 
     }
 
