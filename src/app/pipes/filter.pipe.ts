@@ -16,7 +16,7 @@ export class FilterPipe implements PipeTransform {
     return table.filter((item: any) => {
       for (const j in selectListId) {
 
-        console.log(selectListId);
+
         for (let i in item) {
           let str = item[i];
           if (typeof str === 'object') {
@@ -54,7 +54,28 @@ export class FilterPipe implements PipeTransform {
         result.sort((a: number, b: number) => a.age > b.age ? -1 : 1);
       }
     }
+  }
 
+  sortNameUp(filterCatefories: any, result: Array<number>) {
+    console.log(filterCatefories[5]);
+    if (filterCatefories[5] === true) {
+      for (const item in result) {
+        // @ts-ignore
+        console.log(result.sort((a, b) => a.name > b.name ? 1 : -1));
+
+      }
+    }
+  }
+
+  sortNameDown(filterCatefories: any, result: Array<number>) {
+    console.log(filterCatefories[5]);
+    if (filterCatefories[6] === true) {
+      for (const item in result) {
+        // @ts-ignore
+        console.log(result.sort((a, b) => a.name < b.name ? 1 : -1));
+
+      }
+    }
   }
 
   checkEmptyFilters(filters: Array<string>) {
@@ -75,11 +96,9 @@ export class FilterPipe implements PipeTransform {
 
     let result: any = table;
 
-
     if (this.checkEmptyFilters(filterCatefories)) {
       return table;
     }
-
 
     filterCatefories.forEach(filters => {
 
@@ -88,6 +107,8 @@ export class FilterPipe implements PipeTransform {
       }
 
       result = this.filterArray(result, filters);
+      this.sortNameDown(filterCatefories, result);
+      this.sortNameUp(filterCatefories, result);
       this.sortYearsDown(filterCatefories, result);
       this.sortYearsUp(filterCatefories, result);
 

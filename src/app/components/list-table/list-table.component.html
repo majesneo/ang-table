@@ -1,1 +1,26 @@
-<p>list-table works!</p>
+<div class="table-wrap">
+  <table class="table-1">
+    <tr class="list-table__items">
+      <th class="list-table__item">Name
+        <input class="list-table__check" (change)="sortNameUp($event)" type="checkbox">
+        <input class="list-table__check" (change)="sortNameDown($event)" type="checkbox">
+      </th>
+      <th class="list-table__item">Age
+        <input class="list-table__check" (change)="sortYearsDown($event)" type="checkbox">
+        <input class="list-table__check" (change)="sortYearsUp($event)" type="checkbox">
+      </th>
+      <th class="list-table__item">Gender</th>
+      <th class="list-table__item">Department</th>
+      <th class="list-table__item">Address</th>
+    </tr>
+    <tr
+      *ngFor="let item of table |filter:selectListId[0]:selectListId[1]:selectListId[2]:sortYearsResultDown:sortYearsResultUP:sortNameResultUp:sortNameResultDown">
+      <td>{{item.name}}</td>
+      <td>{{item.age}}</td>
+      <td>{{item.gender}}</td>
+      <td>{{item.department}}</td>
+      <td>{{item.address.city}}<br>{{item.address.street}}</td>
+    </tr>
+  </table>
+
+</div>

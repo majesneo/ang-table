@@ -9,9 +9,6 @@ import {Table} from '../model/table';
 })
 export class TableService {
 
-
-
-
   constructor(private httpclient: HttpClient) {
 
   }

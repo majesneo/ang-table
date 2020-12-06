@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+
+app-list-filter {
+  display: flex;
+  margin: 0 auto;
+}
+
+body {
+
+}
+
+@media (max-width: 900px) {
+  app-list-filter {
+    display: flex;
+    flex-direction: column;
+
+  }
+}

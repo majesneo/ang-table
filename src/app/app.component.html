@@ -1,54 +1,5 @@
-<div>
-
-  <div>
-
-    <div *ngFor="let item of selectGender">
-      <input (change)="getListId($event,item,0)" type="checkbox" name="{{item}}" [value]="item">{{item}}
-    </div>
-  </div>
-
-  <div>
-
-    <div *ngFor="let item of selectDepart">
-      <input (change)="getListId($event,item,1)" type="checkbox" name="{{item}}"
-             [value]="item">{{item}}
-    </div>
-
-
-  </div>
-
-  <div>
-    <div *ngFor="let item of selectCity">
-      <input (change)="getListId($event,item,2)" type="checkbox" name="{{item}}" [value]="item">{{item}}
-    </div>
-
-  </div>
-
+<div class="wrap">
+  <app-list-filter></app-list-filter>
 </div>
-
-<br>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Age</th>
-    <input (change)="sortYearsDown($event)" type="checkbox">
-    <input (change)="sortYearsUp($event)" type="checkbox">
-    <th>Gender</th>
-    <th>Department</th>
-    <th>Address</th>
-  </tr>
-  <tr *ngFor="let item of table |filter:selectListId[0]:selectListId[1]:selectListId[2]:sortYearsResultDown:sortYearsResultUP">
-    <td>{{item.name}}</td>
-
-    <td>{{item.age}}</td>
-    <td>{{item.gender}}</td>
-    <td>{{item.department}}</td>
-    <td>{{item.address.city}}</td>
-    <td> {{item.address.street}}</td>
-  </tr>
-</table>
-
-
 
 

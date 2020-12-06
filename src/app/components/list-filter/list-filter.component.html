@@ -1,2 +1,26 @@
-<p>list-filter works!</p>
+
+<div class="list-filter">
+  <div class="list-filter__items">
+    <h4 class="list-filter__title">Gender</h4>
+    <div class="list-filter__item" *ngFor="let item of selectGender">
+      <input (change)="getListId($event,item,0)" type="checkbox" name="{{item}}" [value]="item">{{item}}
+    </div>
+  </div>
+
+  <div class="list-filter__items">
+    <h4 class="list-filter__title">Department</h4>
+    <div class="list-filter__item" *ngFor="let item of selectDepart">
+      <input (change)="getListId($event,item,1)" type="checkbox" name="{{item}}"
+             [value]="item">{{item}}
+    </div>
+  </div>
+
+  <div class="list-filter__items">
+    <h4 class="list-filter__title">Address</h4>
+    <div class="list-filter__item" *ngFor="let item of selectCity">
+      <input (change)="getListId($event,item,2)" type="checkbox" name="{{item}}" [value]="item">{{item}}
+    </div>
+  </div>
+</div>
+<app-list-table [selectListId]="selectListId"></app-list-table>
 
