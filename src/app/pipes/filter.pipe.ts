@@ -16,6 +16,7 @@ export class FilterPipe implements PipeTransform {
     return table.filter((item: any) => {
       for (const j in selectListId) {
 
+        console.log(selectListId);
         for (let i in item) {
           let str = item[i];
           if (typeof str === 'object') {
@@ -37,26 +38,33 @@ export class FilterPipe implements PipeTransform {
     });
   }
 
-  sortYears(filterCatefories: any, result: any) {
+  sortYearsDown(filterCatefories: any, result: Array<number>) {
     if (filterCatefories[3] === true) {
-
       for (const item in result) {
+        // @ts-ignore
         result.sort((a: number, b: number) => a.age > b.age ? 1 : -1);
-
       }
+    }
+  }
 
-    } else {
+  sortYearsUp(filterCatefories: any, result: Array<number>) {
+    if (filterCatefories[4] === true) {
       for (const item in result) {
+        // @ts-ignore
         result.sort((a: number, b: number) => a.age > b.age ? -1 : 1);
       }
     }
+
   }
 
   checkEmptyFilters(filters: Array<string>) {
     let empty = true;
     filters.forEach(filter => {
+
       if (filter && filter.length > 0) {
+
         empty = false;
+
       }
     });
     return empty;
@@ -66,7 +74,7 @@ export class FilterPipe implements PipeTransform {
   transform(table: any, ...filterCatefories: Array<any>) {
 
     let result: any = table;
-     this.sortYears(filterCatefories, result);
+
 
     if (this.checkEmptyFilters(filterCatefories)) {
       return table;
@@ -74,18 +82,17 @@ export class FilterPipe implements PipeTransform {
 
 
     filterCatefories.forEach(filters => {
-      if (!filters || filters.length === 0|| filters == true) {
+
+      if (!filters || filters.length === 0 || filters == true) {
         return;
       }
-      console.log(filters);
+
       result = this.filterArray(result, filters);
-    /*     console.log(result);*/
-
-
-      this.sortYears(filterCatefories,result)
-
+      this.sortYearsDown(filterCatefories, result);
+      this.sortYearsUp(filterCatefories, result);
 
     });
+
     return result;
   }
 }

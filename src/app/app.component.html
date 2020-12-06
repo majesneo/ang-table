@@ -32,12 +32,13 @@
   <tr>
     <th>Name</th>
     <th>Age</th>
-    <input (change)="sortYears($event)" type="checkbox">
+    <input (change)="sortYearsDown($event)" type="checkbox">
+    <input (change)="sortYearsUp($event)" type="checkbox">
     <th>Gender</th>
     <th>Department</th>
     <th>Address</th>
   </tr>
-  <tr *ngFor="let item of table |filter:selectListId[0]:selectListId[1]:selectListId[2]:sortYearsResult">
+  <tr *ngFor="let item of table |filter:selectListId[0]:selectListId[1]:selectListId[2]:sortYearsResultDown:sortYearsResultUP">
     <td>{{item.name}}</td>
 
     <td>{{item.age}}</td>

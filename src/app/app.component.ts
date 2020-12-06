@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TableService} from './service/table.service';
 import {Table} from './model/table';
-import {Observable} from 'rxjs';
 
 
 @Component({
@@ -17,7 +16,8 @@ export class AppComponent implements OnInit {
   selectCity: Array<string> = [];
   selectDepart: Array<string> = [];
   selectListId: Array<string> = [];
-  sortYearsResult: boolean = false;
+  sortYearsResultDown: boolean = false;
+  sortYearsResultUP: boolean = false;
 
   constructor(private tableService: TableService) {
 
@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.tableService.getDataTable().subscribe((data) => {
       this.table = data;
-
       this.selectGender = this.uniqueGender(data);
       this.selectCity = this.uniqueCity(data);
       this.selectDepart = this.uniqueDepart(data);
@@ -96,21 +95,14 @@ export class AppComponent implements OnInit {
 
   }
 
-  sortYears(e: any) {
-    this.sortYearsResult = e.target.checked;
-
+  sortYearsDown(e: any) {
+    this.sortYearsResultDown = e.target.checked;
   }
 
-  /*  sortYears(years: object) {
-      let allYear = [];
-      for (const year of years) {
-        allYear.push(year.age);
-        console.log(this.sortYearsResult = allYear.sort(function(a: number, b: number) {
+  sortYearsUp(e: any) {
+    this.sortYearsResultUP = e.target.checked;
+  }
 
-          return a - b;
-        }));
-      }
-    }*/
 }
 
 
