@@ -16,7 +16,8 @@ export class AppComponent implements OnInit {
   selectGender: Array<string> = [];
   selectCity: Array<string> = [];
   selectDepart: Array<string> = [];
-  selectListId: Array<string>  = [];
+  selectListId: Array<string> = [];
+  sortYearsResult: boolean = false;
 
   constructor(private tableService: TableService) {
 
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.tableService.getDataTable().subscribe((data) => {
       this.table = data;
-      console.log(this.table);
+
       this.selectGender = this.uniqueGender(data);
       this.selectCity = this.uniqueCity(data);
       this.selectDepart = this.uniqueDepart(data);
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit {
 
 
   uniqueGender(arr: Array<Table>) {
-    console.log(arr);
+
     let result: any[] = [];
 
     for (let str of arr) {
@@ -94,6 +95,22 @@ export class AppComponent implements OnInit {
     }
 
   }
+
+  sortYears(e: any) {
+    this.sortYearsResult = e.target.checked;
+
+  }
+
+  /*  sortYears(years: object) {
+      let allYear = [];
+      for (const year of years) {
+        allYear.push(year.age);
+        console.log(this.sortYearsResult = allYear.sort(function(a: number, b: number) {
+
+          return a - b;
+        }));
+      }
+    }*/
 }
 
 
