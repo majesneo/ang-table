@@ -16,15 +16,12 @@ export class FilterPipe implements PipeTransform {
     return table.filter((item: any) => {
       for (const j in selectListId) {
 
-
         for (let i in item) {
           let str = item[i];
           if (typeof str === 'object') {
             str = item[i].city;
           }
-
           let regexp = new RegExp('\\b' + selectListId[j] + '\\b', 'gi');
-
           str = str.toString();
           if (str.match(regexp)) {
             result.push(item);
@@ -38,43 +35,42 @@ export class FilterPipe implements PipeTransform {
     });
   }
 
+  sortUp = (result: Array<number>) => {
+    for (const item in result) {
+      // @ts-ignore
+      result.sort((a: number, b: number) => a.age < b.age ? 1 : -1);
+    }
+  };
+  sortDown = (result: Array<number>) => {
+    for (const item in result) {
+      // @ts-ignore
+      result.sort((a: number, b: number) => a.age > b.age ? 1 : -1);
+    }
+  };
+
   sortYearsDown(filterCatefories: any, result: Array<number>) {
     if (filterCatefories[3] === true) {
-      for (const item in result) {
-        // @ts-ignore
-        result.sort((a: number, b: number) => a.age > b.age ? 1 : -1);
-      }
+      this.sortDown(result);
     }
   }
 
   sortYearsUp(filterCatefories: any, result: Array<number>) {
     if (filterCatefories[4] === true) {
-      for (const item in result) {
-        // @ts-ignore
-        result.sort((a: number, b: number) => a.age > b.age ? -1 : 1);
-      }
+      this.sortUp(result);
     }
   }
 
   sortNameUp(filterCatefories: any, result: Array<number>) {
-    console.log(filterCatefories[5]);
-    if (filterCatefories[5] === true) {
-      for (const item in result) {
-        // @ts-ignore
-        console.log(result.sort((a, b) => a.name > b.name ? 1 : -1));
 
-      }
+    if (filterCatefories[5] === true) {
+
+      this.sortUp(result);
     }
   }
 
   sortNameDown(filterCatefories: any, result: Array<number>) {
-    console.log(filterCatefories[5]);
     if (filterCatefories[6] === true) {
-      for (const item in result) {
-        // @ts-ignore
-        console.log(result.sort((a, b) => a.name < b.name ? 1 : -1));
-
-      }
+      this.sortDown(result);
     }
   }
 
@@ -93,7 +89,6 @@ export class FilterPipe implements PipeTransform {
 
 
   transform(table: any, ...filterCatefories: Array<any>) {
-
     let result: any = table;
 
     if (this.checkEmptyFilters(filterCatefories)) {
@@ -111,6 +106,7 @@ export class FilterPipe implements PipeTransform {
       this.sortNameUp(filterCatefories, result);
       this.sortYearsDown(filterCatefories, result);
       this.sortYearsUp(filterCatefories, result);
+
 
     });
 

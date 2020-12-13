@@ -1,6 +1,8 @@
 import {Component, OnInit, Output} from '@angular/core';
 import {TableService} from '../../service/table.service';
 import {Table} from '../../model/table';
+import {toArray} from 'rxjs/operators';
+import {OperatorFunction} from 'rxjs';
 
 @Component({
   selector: 'app-list-filter',
@@ -19,12 +21,20 @@ export class ListFilterComponent implements OnInit {
   selectDepart: Array<string> = [];
   @Output() selectListId: Array<string> = [];
 
+
+  gender = 'gender';
+  city = 'city';
+  address = 'address';
+  department = 'department';
+
   ngOnInit(): void {
     this.tableService.getDataTable().subscribe((data) => {
       this.table = data;
-      this.selectGender = this.uniqueGender(data);
-      this.selectCity = this.uniqueCity(data);
-      this.selectDepart = this.uniqueDepart(data);
+
+      this.selectGender = this.unique(data, this.gender);
+      // @ts-ignore
+      this.selectCity = this.unique(data, this.address, this.city);
+      this.selectDepart = this.unique(data, this.department);
 
     });
 
@@ -49,42 +59,40 @@ export class ListFilterComponent implements OnInit {
 
   }
 
-  uniqueGender(arr: Array<Table>) {
+  toArray(obj: Array<Table>, addFilterName: string) {
+    const result: (Table | OperatorFunction<unknown, unknown[]>)[] = [];
+    for (const prop in obj) {
+      const value = obj[prop];
+      if (prop === addFilterName) {
+        if (!result.includes(obj[prop])) {
+          return value;
+        }
+      } else if (typeof value === 'object') {
+        // @ts-ignore
+        result.push(toArray(value));
+      }
+    }
+    return result;
+  }
 
+
+  unique(arr: Array<Table>, filterName: string, addFilterName = null) {
     let result: any[] = [];
-
     for (let str of arr) {
-
-      if (!result.includes(str.gender)) {
-        result.push(str.gender);
+      // @ts-ignore
+      if (typeof str[filterName] === 'object') {
+        // @ts-ignore
+        if (!result.includes(this.toArray(str[filterName], addFilterName))) {
+          // @ts-ignore
+          result.push(this.toArray(str[filterName], addFilterName));
+        }
+      } else { // @ts-ignore
+        if (!result.includes(str[filterName])) {
+          // @ts-ignore
+          result.push(str[filterName]);
+        }
       }
     }
-
     return result;
   }
-
-  uniqueCity(arr: Array<Table>) {
-    let result: any[] = [];
-
-    for (let str of arr) {
-      if (!result.includes(str.address.city)) {
-        result.push(str.address.city);
-      }
-    }
-
-    return result;
-  }
-
-  uniqueDepart(arr: Array<Table>) {
-    let result: any[] = [];
-
-    for (const str of arr) {
-      if (!result.includes(str.department)) {
-        result.push(str.department);
-      }
-    }
-
-    return result;
-  }
-
 }
