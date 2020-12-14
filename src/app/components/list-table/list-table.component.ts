@@ -28,11 +28,12 @@ export class ListTableComponent implements OnInit {
 
   sortYearsUp(event: MouseEvent) {
     this.sortYearsResultUP = !this.sortYearsResultUP;
-
+    this.sortNameResultUp = null;
   }
 
   sortNameUp(event: MouseEvent) {
     this.sortNameResultUp = !this.sortNameResultUp;
+    this.sortYearsResultUP = null;
   }
 
 }

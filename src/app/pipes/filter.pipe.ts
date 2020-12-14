@@ -46,8 +46,8 @@ export class FilterPipe implements PipeTransform {
     }
   };
 
-
   sortYears(filterCatefories: any, result: Array<number>) {
+    console.log(filterCatefories);
     if (filterCatefories[3] === true) {
       this.sortUp(result);
     } else if (filterCatefories[3] !== null && filterCatefories[3] === false) {
