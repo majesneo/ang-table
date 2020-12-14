@@ -15,6 +15,6 @@ export class TableService {
 
   getDataTable(): Observable<Table[]> {
     // @ts-ignore
-    return this.httpclient.get('assets/table.json');
+    return this.httpclient.get('/assets/table.json');
   }
 }

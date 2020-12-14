@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import {Table} from '../model/table';
 
 
 @Pipe({
@@ -8,14 +9,13 @@ import {Pipe, PipeTransform} from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   constructor() {
-
   }
 
-  filterArray(table: any[], selectListId: { [x: string]: string; }) {
+  filterArray(table: any[], selectListId: any = null) {
     let result: any = [];
+    console.log(selectListId);
     return table.filter((item: any) => {
       for (const j in selectListId) {
-
         for (let i in item) {
           let str = item[i];
           if (typeof str === 'object') {
@@ -25,9 +25,7 @@ export class FilterPipe implements PipeTransform {
           str = str.toString();
           if (str.match(regexp)) {
             result.push(item);
-
             return result;
-
           }
         }
       }
@@ -48,40 +46,30 @@ export class FilterPipe implements PipeTransform {
     }
   };
 
-  sortYearsDown(filterCatefories: any, result: Array<number>) {
+
+  sortYears(filterCatefories: any, result: Array<number>) {
     if (filterCatefories[3] === true) {
+      this.sortUp(result);
+    } else if (filterCatefories[3] !== null && filterCatefories[3] === false) {
       this.sortDown(result);
     }
   }
 
-  sortYearsUp(filterCatefories: any, result: Array<number>) {
+  sortName(filterCatefories: any, result: Array<number>) {
     if (filterCatefories[4] === true) {
       this.sortUp(result);
-    }
-  }
-
-  sortNameUp(filterCatefories: any, result: Array<number>) {
-
-    if (filterCatefories[5] === true) {
-
-      this.sortUp(result);
-    }
-  }
-
-  sortNameDown(filterCatefories: any, result: Array<number>) {
-    if (filterCatefories[6] === true) {
+    } else if (filterCatefories[4] !== null && filterCatefories[4] === false) {
       this.sortDown(result);
     }
   }
+
 
   checkEmptyFilters(filters: Array<string>) {
     let empty = true;
+
     filters.forEach(filter => {
-
       if (filter && filter.length > 0) {
-
         empty = false;
-
       }
     });
     return empty;
@@ -89,7 +77,10 @@ export class FilterPipe implements PipeTransform {
 
 
   transform(table: any, ...filterCatefories: Array<any>) {
+
     let result: any = table;
+    this.sortYears(filterCatefories, table);
+    this.sortName(filterCatefories, table);
 
     if (this.checkEmptyFilters(filterCatefories)) {
       return table;
@@ -98,15 +89,9 @@ export class FilterPipe implements PipeTransform {
     filterCatefories.forEach(filters => {
 
       if (!filters || filters.length === 0 || filters == true) {
-        return;
+        return table;
       }
-
       result = this.filterArray(result, filters);
-      this.sortNameDown(filterCatefories, result);
-      this.sortNameUp(filterCatefories, result);
-      this.sortYearsDown(filterCatefories, result);
-      this.sortYearsUp(filterCatefories, result);
-
 
     });
 

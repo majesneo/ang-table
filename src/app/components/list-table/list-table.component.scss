@@ -9,7 +9,6 @@ table.table-1 {
 }
 
 
-
 table.table-1 tr {
   background-color: #f8f8f8;
 }
@@ -24,3 +23,20 @@ table.table-1 th {
   font-weight: bold;
 }
 
+.list-table__check {
+  border: none;
+  background-color: #f8f8f8;
+  outline: none;
+
+  svg {
+    background-color: #f8f8f8;
+    fill: #d1cdcd;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+
+  }
+  .active {
+    fill: black;
+  }
+}

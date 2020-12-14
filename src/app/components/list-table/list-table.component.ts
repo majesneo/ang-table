@@ -13,11 +13,11 @@ export class ListTableComponent implements OnInit {
   }
 
   table: object = [];
-  sortYearsResultDown: boolean = false;
-  sortYearsResultUP: boolean = false;
+
+  sortYearsResultUP: boolean | null = null;
   @Input() selectListId: Array<string> = [];
-  sortNameResultUp: boolean = false;
-  sortNameResultDown: boolean = false;
+  sortNameResultUp: boolean | null = null;
+
 
   ngOnInit(): void {
     this.tableService.getDataTable().subscribe((data) => {
@@ -26,19 +26,13 @@ export class ListTableComponent implements OnInit {
   }
 
 
-  sortYearsDown(e: any) {
-    this.sortYearsResultDown = e.target.checked;
+  sortYearsUp(event: MouseEvent) {
+    this.sortYearsResultUP = !this.sortYearsResultUP;
+
   }
 
-  sortYearsUp(e: any) {
-    this.sortYearsResultUP = e.target.checked;
+  sortNameUp(event: MouseEvent) {
+    this.sortNameResultUp = !this.sortNameResultUp;
   }
 
-  sortNameUp(e: any) {
-    this.sortNameResultUp = e.target.checked;
-  }
-
-  sortNameDown(e: any) {
-    this.sortNameResultDown = e.target.checked;
-  }
 }

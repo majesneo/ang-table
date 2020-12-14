@@ -20,8 +20,6 @@ export class ListFilterComponent implements OnInit {
   selectCity: Array<string> = [];
   selectDepart: Array<string> = [];
   @Output() selectListId: Array<string> = [];
-
-
   gender = 'gender';
   city = 'city';
   address = 'address';
@@ -63,6 +61,7 @@ export class ListFilterComponent implements OnInit {
     const result: (Table | OperatorFunction<unknown, unknown[]>)[] = [];
     for (const prop in obj) {
       const value = obj[prop];
+
       if (prop === addFilterName) {
         if (!result.includes(obj[prop])) {
           return value;
